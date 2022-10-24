@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "compileGifContractTypes": "typechain --target ethers-v5 --out-dir contracts './node_modules/@etherisc/gif-contracts/build/**/*json'"
   },
   "dependencies": {
     "@walletconnect/web3-provider": "^1.8.0",
+    "eth-components": "^3.5.2",
     "ethers": "^5.7.2",
     "next": "12.3.1",
     "react": "18.2.0",
@@ -17,11 +19,14 @@
     "web3": "^1.8.0"
   },
   "devDependencies": {
+    "@etherisc/gif-contracts": "^2.0.0-rc.1-0",
+    "@typechain/ethers-v5": "^10.1.0",
     "@types/node": "18.11.4",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "eslint": "8.26.0",
     "eslint-config-next": "12.3.1",
+    "typechain": "^8.1.0",
     "typescript": "4.8.4"
   }
 }
