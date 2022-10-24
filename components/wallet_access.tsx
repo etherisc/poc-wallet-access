@@ -1,10 +1,7 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { ethers, Signer, utils, Wallet } from "ethers";
-import RenderResult from "next/dist/server/render-result";
+import { ethers, utils, Wallet } from "ethers";
 import { useState } from "react";
-import { Account } from 'eth-components';
-import { AccessControlEnumerable__factory, AyiiProduct__factory, TestCoin__factory } from "../contracts";
-import { parseBytes32String } from "ethers/lib/utils";
+import { AyiiProduct__factory, TestCoin__factory } from "../contracts";
 
 export default function WalletAccess() {
 
@@ -96,6 +93,7 @@ export default function WalletAccess() {
         console.log(tx);
         const response = await tx.wait();
         console.log(response);
+
     }
 
     let connected = (<div>No Wallet connected</div>);
