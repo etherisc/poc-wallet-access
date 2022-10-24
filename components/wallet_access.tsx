@@ -2,6 +2,8 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers, utils, Wallet } from "ethers";
 import { useState } from "react";
 import { AyiiProduct__factory, TestCoin__factory } from "../contracts";
+import AyiiProductBuild from "@etherisc/gif-contracts/build/contracts/AyiiProduct.json";
+import { Coder } from 'abi-coder';
 
 export default function WalletAccess() {
 
@@ -94,6 +96,22 @@ export default function WalletAccess() {
         const response = await tx.wait();
         console.log(response);
 
+        const ayiiProductAbiCoder = new Coder(AyiiProductBuild.abi);
+        let processId = '';
+
+        response.logs.forEach(log => {
+            try {
+                const evt = ayiiProductAbiCoder.decodeEvent(log.topics, log.data);
+                if (evt.name === 'LogAyiiPolicyCreated') {
+                    console.log(evt);
+                    processId = evt.values.policyId.toString();
+                }
+            } catch (e) {
+                // console.log(e);
+            }
+        });
+        console.log(`processId: ${processId}`);
+        alert(`processId: ${processId}`);
     }
 
     let connected = (<div>No Wallet connected</div>);
