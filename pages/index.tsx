@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
+import CounterAccess from '../components/counter_access'
 import WalletAccess from '../components/wallet_access'
 import styles from '../styles/Home.module.css'
 
@@ -18,6 +19,8 @@ const Home: NextPage = () => {
       <main className={styles.main}>
 
         <WalletAccess />
+
+        <CounterAccess />
 
       </main>
 

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "compileGifContractTypes": "typechain --target ethers-v5 --out-dir contracts './node_modules/@etherisc/gif-contracts/build/**/*json'"
+    "compileGifContractTypes": "typechain --target ethers-v5 --out-dir contracts './node_modules/@etherisc/gif-contracts/build/**/*json'",
+    "compileCounterType": "typechain --target ethers-v5 --out-dir contracts './counter-contracts/*json'"
   },
   "dependencies": {
     "@walletconnect/web3-provider": "^1.8.0",
