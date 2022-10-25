@@ -13,7 +13,7 @@ export default function WalletAccess() {
     async function doIt() {
         console.log("hello world!");
 
-        // eslint-disable-next-line
+        // @ts-ignore
         if (!window.ethereum) {
             alert("Please install MetaMask first.");
             return;
@@ -21,6 +21,7 @@ export default function WalletAccess() {
 
         // A Web3Provider wraps a standard Web3 provider, which is
         // what MetaMask injects as window.ethereum into each page
+        // @ts-ignore
         const provider = new ethers.providers.Web3Provider(window.ethereum)
 
         // MetaMask requires requesting permission to connect users accounts
@@ -49,14 +50,14 @@ export default function WalletAccess() {
             // 3: "https://ropsten.mycustomnode.com",
             // 100: "https://dai.poa.network",
             // ...
-                "1234": "https://df24-46-126-144-178.eu.ngrok.io",
+                "1234": "https://wapoc-chain.loca.lt",
             },
         });
         
         //  Enable session (triggers QR Code modal)
         await wcProvider.enable();
 
-    // A Web3Provider wraps a standard Web3 provider, which is
+        // A Web3Provider wraps a standard Web3 provider, which is
         // what MetaMask injects as window.ethereum into each page
         const provider = new ethers.providers.Web3Provider(wcProvider);
 
@@ -72,7 +73,8 @@ export default function WalletAccess() {
         console.log("getting balance " + await signer.getAddress());
         const balance = await signer.getBalance();
         console.log(balance.toString());
-        alert(balance.toString());
+        setEthProvider(provider);
+        setEthSigner(signer);
     }
 
     async function createApproval() {
@@ -88,7 +90,6 @@ export default function WalletAccess() {
         const account = utils.HDNode.fromMnemonic(process.env.NEXT_PUBLIC_INSURER_MNEMONIC!).derivePath(`m/44'/60'/0'/0/${process.env.NEXT_PUBLIC_INSURER_ACCOUNT_INDEX}`);
         const insurerSigner = new Wallet(account, ethProvider);
 
-        
         const product = AyiiProduct__factory.connect(process.env.NEXT_PUBLIC_PRODUCT_ADDRESS!, insurerSigner);
 
         const tx = await product.applyForPolicy(ethSigner?.getAddress()!, 100, 1000, process.env.NEXT_PUBLIC_RISK_ID!);
@@ -104,6 +105,7 @@ export default function WalletAccess() {
                 const evt = ayiiProductAbiCoder.decodeEvent(log.topics, log.data);
                 if (evt.name === 'LogAyiiPolicyCreated') {
                     console.log(evt);
+                    // @ts-ignore
                     processId = evt.values.policyId.toString();
                 }
             } catch (e) {
