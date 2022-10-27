@@ -123,13 +123,13 @@ export default function CounterAccess() {
 
     return (
         <div>
-            <h1>Counter Access</h1>
+            <h1>PoC Counter</h1>
 
             {connected}
 
             <div>
-                <button onClick={doIt}>Connect metamask</button>
-                <button onClick={doItWc}>Get balance with <i>Wallet connect</i></button>
+                <button onClick={doIt}>Connect to metamask</button>
+                <button onClick={doItWc}>Connect to wallet with <i>Wallet connect</i></button>
             </div>
             {count}
         </div>

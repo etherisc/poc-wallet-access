@@ -1,9 +1,10 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers, utils, Wallet } from "ethers";
 import { useState } from "react";
-import { AyiiProduct__factory, TestCoin__factory } from "../contracts";
 import AyiiProductBuild from "@etherisc/gif-contracts/build/contracts/AyiiProduct.json";
 import { Coder } from 'abi-coder';
+import { TestCoin__factory } from "../contracts/factories/TestCoin__factory";
+import { AyiiProduct__factory } from "../contracts/factories/AyiiProduct__factory";
 
 export default function WalletAccess() {
 
@@ -135,13 +136,13 @@ export default function WalletAccess() {
 
     return (
         <div>
-            <h1>Wallet Access</h1>
+            <h1>PoC Ayii policy apply</h1>
 
             {connected}
 
             <div>
-                <button onClick={doIt}>Connect metamask</button>
-                <button onClick={doItWc}>Get balance with <i>Wallet connect</i></button>
+                <button onClick={doIt}>Connect to metamask</button>
+                <button onClick={doItWc}>Connect to wallet with <i>Wallet connect</i></button>
             </div>
             {approval}
             {policy}
