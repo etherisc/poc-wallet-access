@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import CounterAccess from '../components/counter_access'
 import MessageSigner from '../components/message_signer'
+import MessageVerifier from '../components/message_verifier'
 import WalletAccess from '../components/wallet_access'
 import styles from '../styles/Home.module.css'
 
@@ -19,9 +20,9 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
 
-        <WalletAccess />
+        <MessageSigner />
 
-        <CounterAccess />
+        <MessageVerifier />
 
       </main>
 
