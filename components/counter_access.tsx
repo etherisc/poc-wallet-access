@@ -1,84 +1,14 @@
-import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
 import { useState } from "react";
 import { Counter__factory } from "../contracts";
 import CounterBuild from "../custom-contracts/Counter.json";
 import { Coder } from 'abi-coder';
+import { connectEthersWallet, connectWalletConnect } from "./utils";
 
 export default function CounterAccess() {
 
     const [ethProvider, setEthProvider] = useState<ethers.providers.Web3Provider>();
     const [ethSigner, setEthSigner] = useState<ethers.Signer>();
-    
-    async function doIt() {
-        console.log("hello world!");
-
-        // @ts-ignore
-        if (!window.ethereum) {
-            alert("Please install MetaMask first.");
-            return;
-        }
-
-        // A Web3Provider wraps a standard Web3 provider, which is
-        // what MetaMask injects as window.ethereum into each page
-        // @ts-ignore
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-
-        // MetaMask requires requesting permission to connect users accounts
-        await provider.send("eth_requestAccounts", []);
-
-        console.log("getting signer");
-        // The MetaMask plugin also allows signing transactions to
-        // send ether and pay to change state within the blockchain.
-        // For this, you need the account signer...
-        const signer = provider.getSigner();
-
-        console.log("getting balance " + await signer.getAddress());
-        const balance = await signer.getBalance();
-        console.log(balance.toString());
-        setEthProvider(provider);
-        setEthSigner(signer);
-    }
-
-    async function doItWc() {
-        console.log("hello wallet connect!");
-
-        //  Create WalletConnect Provider
-        const wcProvider = new WalletConnectProvider({
-            rpc: {
-                "43113": "https://api.avax-test.network/ext/bc/C/rpc",
-            },
-        });
-        
-        //  Enable session (triggers QR Code modal)
-        await wcProvider.enable();
-
-        // A Web3Provider wraps a standard Web3 provider, which is
-        // what MetaMask injects as window.ethereum into each page
-        const provider = new ethers.providers.Web3Provider(wcProvider);
-
-        // MetaMask requires requesting permission to connect users accounts
-        // await provider.send("eth_requestAccounts", []);
-
-        console.log("getting wc signer");
-        // The MetaMask plugin also allows signing transactions to
-        // send ether and pay to change state within the blockchain.
-        // For this, you need the account signer...
-        const signer = provider.getSigner();
-
-        console.log("getting balance " + await signer.getAddress());
-        const balance = await signer.getBalance();
-        console.log(balance.toString());
-        setEthProvider(provider);
-        setEthSigner(signer);
-    }
-
-    // async function createApproval() {
-    //     console.log(`creating approval for usdc ${process.env.NEXT_PUBLIC_USDC_ADDRESS}`);
-    //     const usdc = TestCoin__factory.connect(process.env.NEXT_PUBLIC_USDC_ADDRESS || '', ethSigner!);
-    //     await usdc.approve(process.env.NEXT_PUBLIC_TREASURY_ADDRESS || '', 100);
-    //     console.log('approval created');
-    // }
 
     async function incrementCounter() {
         console.log("counting");
@@ -128,8 +58,8 @@ export default function CounterAccess() {
             {connected}
 
             <div>
-                <button onClick={doIt}>Connect to metamask</button>
-                <button onClick={doItWc}>Connect to wallet with <i>Wallet connect</i></button>
+                <button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</button>
+                <button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></button>
             </div>
             {count}
         </div>
