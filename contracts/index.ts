@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Counter } from "./Counter";
+export type { Verifier } from "./Verifier";
 export * as factories from "./factories";
 export { Counter__factory } from "./factories/Counter__factory";
+export { Verifier__factory } from "./factories/Verifier__factory";

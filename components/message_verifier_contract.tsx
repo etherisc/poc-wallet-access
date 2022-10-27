@@ -6,8 +6,9 @@ import { Coder } from 'abi-coder';
 import { TestCoin__factory } from "../contracts/factories/TestCoin__factory";
 import { AyiiProduct__factory } from "../contracts/factories/AyiiProduct__factory";
 import { hashMessage } from "ethers/lib/utils";
+import { Verifier__factory } from "../contracts";
 
-export default function MessageVerifier() {
+export default function MessageVerifierContract() {
 
     const [ethProvider, setEthProvider] = useState<ethers.providers.Web3Provider>();
     const [ethSigner, setEthSigner] = useState<ethers.Signer>();
@@ -80,7 +81,6 @@ export default function MessageVerifier() {
     }
 
     let connected = (<div>No Wallet connected</div>);
-
     if (ethSigner) {
         connected = (<div>Wallet connected</div>);
     }
@@ -94,13 +94,24 @@ export default function MessageVerifier() {
 
     async function verifySignature() {
         console.log("verifying message");
-        const address = await ethers.utils.recoverAddress(hashMessage(message || ''), verifyInput || '');
-        setVerified(address === await ethSigner?.getAddress());
+        let sig = ethers.utils.splitSignature(verifyInput);
+
+        const verifier = Verifier__factory.connect(process.env.NEXT_PUBLIC_VERIFIER_ADDRESS!, ethSigner!);
+
+        console.log(message);
+        console.log(sig.v);
+        console.log(sig.r);
+        console.log(sig.s);
+
+        // let recovered = await verifier.verifyString(message, sig.v, sig.r, sig.s);
+        let recovered = await verifier.verifyHash(ethers.utils.id(message), sig.v, sig.r, sig.s);
+        console.log(recovered);
+        setVerified(recovered === await ethSigner?.getAddress());
     }
 
     return (
         <div>
-            <h1>Message Verifier (via ethers)</h1>
+            <h1>Message Verifier (via contract)</h1>
 
             {connected}
 

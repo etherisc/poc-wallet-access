@@ -79,73 +79,28 @@ export default function MessageSigner() {
         setEthSigner(signer);
     }
 
-    async function createApproval() {
-        console.log(`creating approval for usdc ${process.env.NEXT_PUBLIC_USDC_ADDRESS}`);
-        const usdc = TestCoin__factory.connect(process.env.NEXT_PUBLIC_USDC_ADDRESS || '', ethSigner!);
-        await usdc.approve(process.env.NEXT_PUBLIC_TREASURY_ADDRESS || '', 100);
-        console.log('approval created');
-    }
-
-    async function applyForPolicy() {
-        console.log(`apply for policy. product: ${process.env.NEXT_PUBLIC_PRODUCT_ADDRESS} riskId: ${process.env.NEXT_PUBLIC_RISK_ID}`);
-        // const insurerWallet = Wallet.fromMnemonic(process.env.NEXT_PUBLIC_INSURER_MNEMONIC!, `m/44'/60'/0'/0/${process.env.NEXT_PUBLIC_INSURER_ACCOUNT_INDEX}`);
-        const account = utils.HDNode.fromMnemonic(process.env.NEXT_PUBLIC_INSURER_MNEMONIC!).derivePath(`m/44'/60'/0'/0/${process.env.NEXT_PUBLIC_INSURER_ACCOUNT_INDEX}`);
-        const insurerSigner = new Wallet(account, ethProvider);
-
-        const product = AyiiProduct__factory.connect(process.env.NEXT_PUBLIC_PRODUCT_ADDRESS!, insurerSigner);
-
-        const tx = await product.applyForPolicy(ethSigner?.getAddress()!, 100, 1000, process.env.NEXT_PUBLIC_RISK_ID!);
-        console.log(tx);
-        const response = await tx.wait();
-        console.log(response);
-
-        const ayiiProductAbiCoder = new Coder(AyiiProductBuild.abi);
-        let processId = '';
-
-        response.logs.forEach(log => {
-            try {
-                const evt = ayiiProductAbiCoder.decodeEvent(log.topics, log.data);
-                if (evt.name === 'LogAyiiPolicyCreated') {
-                    console.log(evt);
-                    // @ts-ignore
-                    processId = evt.values.policyId.toString();
-                }
-            } catch (e) {
-                // console.log(e);
-            }
-        });
-        console.log(`processId: ${processId}`);
-        alert(`processId: ${processId}`);
-    }
-
     let connected = (<div>No Wallet connected</div>);
-    let approval = (<div></div>);
-    let policy = (<div></div>);
     if (ethSigner) {
         connected = (<div>Wallet connected</div>);
-        approval = (
-            <div>
-                <button onClick={createApproval}>Create approval</button>
-            </div>
-        );
-        policy = (
-            <div>
-                <button onClick={applyForPolicy}>Apply for policy</button>
-            </div>
-        );
     }
 
     const [message, setMessage] = useState<string>("");
     const handleMessageChange = (e: any) => setMessage(e.target.value);
     const [signature, setSignature] = useState<string>("");
-    const [verifyInput, setVerifyInput] = useState<string>("");
-    const handleVerifyInputChange = (e: any) => setVerifyInput(e.target.value);
-    const [verified, setVerified] = useState<boolean>(false);
     
     async function signMessage() {
         console.log("signing message");
-        const signature = await ethSigner?.signMessage(message || '');
+
+        // const signature = await ethSigner?.signMessage(message);
+        const messageHash = ethers.utils.id(message);
+        const messageHashBytes = ethers.utils.arrayify(messageHash)
+        const signature = await ethSigner?.signMessage(messageHashBytes);
         setSignature(signature || '');
+        let sig = ethers.utils.splitSignature(signature!);
+        console.log(message);
+        console.log(sig.v);
+        console.log(sig.r);
+        console.log(sig.s);
     }
 
     return (

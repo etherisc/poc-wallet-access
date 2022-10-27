@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Counter__factory } from "./Counter__factory";
+export { Verifier__factory } from "./Verifier__factory";
