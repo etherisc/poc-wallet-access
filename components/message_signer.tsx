@@ -91,10 +91,8 @@ export default function MessageSigner() {
     async function signMessage() {
         console.log("signing message");
 
-        // const signature = await ethSigner?.signMessage(message);
-        const messageHash = ethers.utils.id(message);
-        const messageHashBytes = ethers.utils.arrayify(messageHash)
-        const signature = await ethSigner?.signMessage(messageHashBytes);
+        const signature = await ethSigner?.signMessage(message);
+        
         setSignature(signature || '');
         let sig = ethers.utils.splitSignature(signature!);
         console.log(message);

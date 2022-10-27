@@ -103,8 +103,7 @@ export default function MessageVerifierContract() {
         console.log(sig.r);
         console.log(sig.s);
 
-        // let recovered = await verifier.verifyString(message, sig.v, sig.r, sig.s);
-        let recovered = await verifier.verifyHash(ethers.utils.id(message), sig.v, sig.r, sig.s);
+        let recovered = await verifier.verifyString(message, sig.v, sig.r, sig.s);
         console.log(recovered);
         setVerified(recovered === await ethSigner?.getAddress());
     }
