@@ -6,7 +6,7 @@ import { TestCoin__factory } from "../contracts/factories/TestCoin__factory";
 import { AyiiProduct__factory } from "../contracts/factories/AyiiProduct__factory";
 import { connectEthersWallet, connectWalletConnect } from "./utils";
 
-export default function WalletAccess() {
+export default function ApplyForPolicy() {
 
     const [ethProvider, setEthProvider] = useState<ethers.providers.Web3Provider>();
     const [ethSigner, setEthSigner] = useState<ethers.Signer>();

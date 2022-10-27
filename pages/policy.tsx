@@ -1,12 +1,8 @@
-import { ethers } from 'ethers'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState } from 'react'
-import CounterAccess from '../components/counter_access'
-import MessageSigner from '../components/message_signer'
-import WalletAccess from '../components/wallet_access'
 import styles from '../styles/Home.module.css'
+import ApplyForPolicy from '../components/apply_for_policy'
 
 const Home: NextPage = () => {
     return (
@@ -19,7 +15,7 @@ const Home: NextPage = () => {
 
         <main className={styles.main}>
 
-            <WalletAccess />
+            <ApplyForPolicy />
 
         </main>
 
