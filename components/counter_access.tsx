@@ -1,8 +1,8 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { ethers, utils, Wallet } from "ethers";
+import { ethers } from "ethers";
 import { useState } from "react";
 import { Counter__factory } from "../contracts";
-import CounterBuild from "../counter-contracts/Counter.json";
+import CounterBuild from "../custom-contracts/Counter.json";
 import { Coder } from 'abi-coder';
 
 export default function CounterAccess() {

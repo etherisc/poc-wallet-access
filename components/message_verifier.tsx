@@ -1,10 +1,6 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { ethers, utils, Wallet } from "ethers";
+import { ethers } from "ethers";
 import { useState } from "react";
-import AyiiProductBuild from "@etherisc/gif-contracts/build/contracts/AyiiProduct.json";
-import { Coder } from 'abi-coder';
-import { TestCoin__factory } from "../contracts/factories/TestCoin__factory";
-import { AyiiProduct__factory } from "../contracts/factories/AyiiProduct__factory";
 import { hashMessage } from "ethers/lib/utils";
 
 export default function MessageVerifier() {
