@@ -32,7 +32,7 @@ http://localhost:3000
 2. Click on _Count_ button and wait
 3. Alert dialog will show incremented value
 
-Requires env variable `NEXT_PUBLIC_COUNTER_ADDRESS` to be set to the address where the accessible [`Counter`](https://github.com/etherisc/hardhat-playground/blob/main/contracts/Counter.sol) contract is [deployed](https://github.com/etherisc/hardhat-playground/blob/main/scripts/deploy_counter.ts), e.g. `0x78A7164B9F915998d932160d24ba3b5656e34e44`. 
+Requires env variable `NEXT_PUBLIC_COUNTER_ADDRESS` to be set to the address where the accessible [`Counter`](https://github.com/etherisc/hardhat-playground/blob/main/contracts/Counter.sol) contract is [deployed](https://github.com/etherisc/hardhat-playground/blob/main/scripts/deploy_counter.ts), e.g. `0x78A7164B9F915998d932160d24ba3b5656e34e44` on fuji testnet. 
 
 ## Get a new policy 
 
@@ -68,5 +68,5 @@ http://localhost:3000/sign
 7. Click _Verify signature_ button
 8. Result will be shown in _Verified_ 
 
-Requires env variable `NEXT_PUBLIC_VERIFIER_ADDRESS` to be set to the address where the accessible [`Verifier`](https://github.com/etherisc/hardhat-playground/blob/main/contracts/Verifier.sol) contract is [deployed](https://github.com/etherisc/hardhat-playground/blob/main/scripts/deploy_verifier.ts), e.g. `0xDEA14D28b8750492a14b4921c965F2CD1400D44a`. 
+Requires env variable `NEXT_PUBLIC_VERIFIER_ADDRESS` to be set to the address where the accessible [`Verifier`](https://github.com/etherisc/hardhat-playground/blob/main/contracts/Verifier.sol) contract is [deployed](https://github.com/etherisc/hardhat-playground/blob/main/scripts/deploy_verifier.ts), e.g. `0xDEA14D28b8750492a14b4921c965F2CD1400D44a` on fuji testnet. 
 
