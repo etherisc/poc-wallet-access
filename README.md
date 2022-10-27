@@ -1,4 +1,4 @@
-# Standaoline webapplication contract access poc
+# Standalone webapplication contract access poc
 ## Getting Started
 
 First, run the development server:
