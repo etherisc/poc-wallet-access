@@ -4,6 +4,7 @@ import { Counter__factory } from "../contracts";
 import CounterBuild from "../custom-contracts/Counter.json";
 import { Coder } from 'abi-coder';
 import { connectEthersWallet, connectWalletConnect } from "./utils";
+import { Typography, Button, Space } from 'antd';
 
 export default function CounterAccess() {
 
@@ -51,16 +52,19 @@ export default function CounterAccess() {
 
     }
 
+    const { Title } = Typography;
+
     return (
         <div>
-            <h1>PoC Counter</h1>
+            <Title>PoC Counter</Title>
 
             {connected}
+            <br/>
 
-            <div>
-                <button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</button>
-                <button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></button>
-            </div>
+            <Space size={8}>
+                <Button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)} type="primary">Connect to metamask</Button>
+                <Button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></Button>
+            </Space>
             {count}
         </div>
     );
