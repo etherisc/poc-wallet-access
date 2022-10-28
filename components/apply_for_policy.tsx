@@ -5,6 +5,7 @@ import { Coder } from 'abi-coder';
 import { TestCoin__factory } from "../contracts/factories/TestCoin__factory";
 import { AyiiProduct__factory } from "../contracts/factories/AyiiProduct__factory";
 import { connectEthersWallet, connectWalletConnect } from "./utils";
+import { Button, Space, Typography } from "antd";
 
 export default function ApplyForPolicy() {
 
@@ -57,28 +58,31 @@ export default function ApplyForPolicy() {
         connected = (<div>Wallet connected</div>);
         approval = (
             <div>
-                <button onClick={createApproval}>Create approval</button>
+                <Button onClick={createApproval}>Create approval</Button>
             </div>
         );
         policy = (
             <div>
-                <button onClick={applyForPolicy}>Apply for policy</button>
+                <Button onClick={applyForPolicy}>Apply for policy</Button>
             </div>
         );
     }
 
+    const { Title } = Typography;
+
     return (
         <div>
-            <h1>PoC Ayii policy apply</h1>
+            <Title>PoC Ayii policy apply</Title>
 
             {connected}
+            <br />
 
-            <div>
-                <button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</button>
-                <button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></button>
-            </div>
-            {approval}
-            {policy}
+            <Space size={8}>
+                <Button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</Button>
+                <Button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></Button>
+                {approval}
+                {policy}
+            </Space>
         </div>
     );
 }
