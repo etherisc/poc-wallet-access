@@ -1,3 +1,4 @@
+import { Button, Input, Typography } from "antd";
 import { ethers } from "ethers";
 import { useState } from "react";
 import { connectEthersWallet, connectWalletConnect } from "./utils";
@@ -29,25 +30,27 @@ export default function MessageSigner() {
         console.log(sig.s);
     }
 
+    const { Title } = Typography;
+
     return (
         <div>
-            <h1>Message signer</h1>
+            <Title>Message signer</Title>
 
             {connected}
+            <br/>
 
             <div>
-                <button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</button>
-                <button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></button>
+                <Button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</Button>
+                <Button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></Button>
             </div>
             <div>
-                <button onClick={signMessage}>Sign message</button>
-            </div>
-
-            <div>
-                Message: <input type="text" value={message} onChange={handleMessageChange} size={50} />
+                <Button onClick={signMessage}>Sign message</Button>
             </div>
             <div>
-                Signature: {signature}
+                Message: <Input type="text" value={message} onChange={handleMessageChange} />
+            </div>
+            <div>
+                Signature: <Input type="text" value={signature} />
             </div>
         </div>
     );

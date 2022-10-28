@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { useState } from "react";
 import { hashMessage } from "ethers/lib/utils";
 import { connectEthersWallet, connectWalletConnect } from "./utils";
+import { Button, Input, Typography } from "antd";
 
 export default function MessageVerifier() {
 
@@ -27,24 +28,27 @@ export default function MessageVerifier() {
         setVerified(address === await ethSigner?.getAddress());
     }
 
+    const { Title } = Typography;
+
     return (
         <div>
-            <h1>Message Verifier (via ethers)</h1>
+            <Title>Message Verifier (via ethers)</Title>
 
             {connected}
+            <br />
 
             <div>
-                <button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</button>
-                <button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></button>
+                <Button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</Button>
+                <Button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></Button>
             </div>
             <div>
-                <button onClick={verifySignature}>Verify signature</button>
+                <Button onClick={verifySignature}>Verify signature</Button>
             </div>
 
             <div>
-                Message: <input type="text" value={message} onChange={handleMessageChange} size={50} />
+                Message: <Input type="text" value={message} onChange={handleMessageChange} />
                 <br/>
-                Signature: <input type="text" value={verifyInput} onChange={handleVerifyInputChange} size={50} />
+                Signature: <Input type="text" value={verifyInput} onChange={handleVerifyInputChange} />
             </div>
 
             <div>
