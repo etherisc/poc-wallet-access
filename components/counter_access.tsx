@@ -41,13 +41,11 @@ export default function CounterAccess() {
     }
 
     let connected = (<div>No Wallet connected</div>);
-    let count = (<div></div>);
+    let count = (<></>);
     if (ethSigner) {
         connected = (<div>Wallet connected</div>);
         count = (
-            <div>
-                <button onClick={incrementCounter}>Count</button>
-            </div>
+            <Button onClick={incrementCounter}>Count</Button>
         );
 
     }
@@ -62,10 +60,10 @@ export default function CounterAccess() {
             <br/>
 
             <Space size={8}>
-                <Button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)} type="primary">Connect to metamask</Button>
+                <Button onClick={() => connectEthersWallet(setEthProvider, setEthSigner)}>Connect to metamask</Button>
                 <Button onClick={() => connectWalletConnect(setEthProvider, setEthSigner)}>Connect to wallet with <i>Wallet connect</i></Button>
+                {count}
             </Space>
-            {count}
         </div>
     );
 }
