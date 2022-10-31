@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "compileGifContractTypes": "typechain --target ethers-v5 --out-dir contracts './node_modules/@etherisc/gif-contracts/build/**/*json'",
-    "compileCustomTypes": "typechain --target ethers-v5 --out-dir contracts './custom-contracts/*json'"
+    "compileCustomTypes": "typechain --target ethers-v5 --out-dir contracts './custom-contracts/*json'",
+    "build:anttheme": "lessc -x -js ./styles/themes/light-theme.less ./public/ant-light-theme.css"
   },
   "dependencies": {
     "@walletconnect/web3-provider": "^1.8.0",
@@ -19,6 +20,7 @@
     "eth-components": "^3.5.2",
     "eth-hooks": "^4.6.2",
     "ethers": "^5.7.2",
+    "less": "^4.1.3",
     "next": "^12.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",

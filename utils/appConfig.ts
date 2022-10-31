@@ -5,12 +5,13 @@ export const fujiEthProvider = new StaticJsonRpcProvider('https://api.avax-test.
 
 const PROJECT_ID = '6cf24be37dc19d58bc113806ab03aded';
 export const web3ClientConfig = {
-    projectId: PROJECT_ID,
-    theme: 'dark',
+    projectId: '6cf24be37dc19d58bc113806ab03aded',
+    theme: 'light',
     accentColor: 'default',
+    // disableInjectedProvider: true,
     ethereum: {
         appName: 'web3Modal',
-        autoConnect: true,
+        autoConnect: false,
         chains: [
             chains.mainnet,
             chains.avalanche,
@@ -21,6 +22,25 @@ export const web3ClientConfig = {
             // chains.arbitrum,
             // chains.optimism,
         ],
-        providers: [providers.walletConnectProvider({ projectId: PROJECT_ID })]
+        providers: [providers.walletConnectProvider({ projectId: '6cf24be37dc19d58bc113806ab03aded' })]
+    }
+}
+
+export const web3Config = {
+    projectId: '6cf24be37dc19d58bc113806ab03aded',
+    theme: 'light',
+    accentColor: 'default',
+    ethereum: {
+        appName: 'web3Modal',
+        chains: [
+            chains.mainnet,
+            chains.avalanche,
+            chains.avalancheFuji,
+            chains.polygon,
+            // chains.binanceSmartChain,
+            // chains.fantom,
+            // chains.arbitrum,
+            // chains.optimism,
+        ],
     }
 }
