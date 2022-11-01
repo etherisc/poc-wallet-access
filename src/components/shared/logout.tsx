@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useContext } from "react";
-import { SignerActionType, SignerContext } from "../context/signer_context";
+import { SignerActionType, SignerContext } from "../../context/signer_context";
 
 export default function Logout() {
     const signerContext = useContext(SignerContext);

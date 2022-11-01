@@ -1,30 +1,30 @@
+import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Button } from "antd";
-import { OmitProps } from "antd/lib/transfer/ListBody";
 import { ethers } from "ethers";
 import { useContext } from "react";
-import { SignerAction, SignerActionType, SignerContext } from "../context/signer_context";
+import { walletConnectConfig } from "../../config/appConfig";
+import { SignerContext, SignerActionType } from "../../context/signer_context";
 
-export default function LoginWithMetaMaskButton() {
+export default function LoginWithWalletConnectButton() {
     const signerContext = useContext(SignerContext);
 
     async function login() {
-        console.log("metamask login");
+        console.log("wallet connect login");
 
-        // @ts-ignore
-        if (!window.ethereum) {
-            alert("Please install MetaMask first.");
-            return;
-        }
+        //  Create WalletConnect Provider
+        const wcProvider = new WalletConnectProvider(walletConnectConfig);
+
+        //  Enable session (triggers QR Code modal)
+        await wcProvider.enable();
 
         // A Web3Provider wraps a standard Web3 provider, which is
         // what MetaMask injects as window.ethereum into each page
-        // @ts-ignore
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const provider = new ethers.providers.Web3Provider(wcProvider);
 
         // MetaMask requires requesting permission to connect users accounts
-        await provider.send("eth_requestAccounts", []);
+        // await provider.send("eth_requestAccounts", []);
 
-        console.log("getting signer");
+        console.log("getting wc signer");
         // The MetaMask plugin also allows signing transactions to
         // send ether and pay to change state within the blockchain.
         // For this, you need the account signer...
@@ -35,7 +35,7 @@ export default function LoginWithMetaMaskButton() {
     let button = (<></>);
     
     if (signerContext?.data.signer === undefined) {
-        button = (<Button onClick={login}>Login with Metamask</Button>);
+        button = (<Button onClick={login}>Login with Wallet Connect</Button>);
     }
 
     return (

@@ -1,11 +1,11 @@
 import { BigNumber, ethers } from "ethers";
 import { useContext, useEffect, useState } from "react";
-import { SignerContext } from "../context/signer_context";
 import Blockies from 'react-blockies';
 import { Avatar, message, Space } from "antd";
 import { CopyTwoTone } from "@ant-design/icons";
-import { AggregatorV3Interface__factory } from "../../contracts/factories/AggregatorV3Interface__factory";
-import { formatEthersNumber } from "../utils/bignumber";
+import { AggregatorV3Interface__factory } from "../../../contracts";
+import { SignerContext } from "../../context/signer_context";
+import { formatEthersNumber } from "../../utils/bignumber";
 
 export default function MyAccount() {
     const signerContext = useContext(SignerContext);

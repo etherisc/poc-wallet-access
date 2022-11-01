@@ -3,8 +3,7 @@ import 'antd/dist/antd.css';
 import type { AppProps } from 'next/app'
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import AppHeader from '../src/components/app_header';
+import AppHeader from '../src/components/shared/app_header';
 import React, { useReducer } from 'react';
 import { initialSignerData, SignerContext, signerReducer } from '../src/context/signer_context';
 

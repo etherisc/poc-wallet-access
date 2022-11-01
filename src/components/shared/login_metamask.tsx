@@ -1,30 +1,29 @@
-import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Button } from "antd";
 import { ethers } from "ethers";
 import { useContext } from "react";
-import { walletConnectConfig } from "../config/appConfig";
-import { SignerActionType, SignerContext } from "../context/signer_context";
+import { SignerActionType, SignerContext } from "../../context/signer_context";
 
-export default function LoginWithWalletConnectButton() {
+export default function LoginWithMetaMaskButton() {
     const signerContext = useContext(SignerContext);
 
     async function login() {
-        console.log("wallet connect login");
+        console.log("metamask login");
 
-        //  Create WalletConnect Provider
-        const wcProvider = new WalletConnectProvider(walletConnectConfig);
-
-        //  Enable session (triggers QR Code modal)
-        await wcProvider.enable();
+        // @ts-ignore
+        if (!window.ethereum) {
+            alert("Please install MetaMask first.");
+            return;
+        }
 
         // A Web3Provider wraps a standard Web3 provider, which is
         // what MetaMask injects as window.ethereum into each page
-        const provider = new ethers.providers.Web3Provider(wcProvider);
+        // @ts-ignore
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
 
         // MetaMask requires requesting permission to connect users accounts
-        // await provider.send("eth_requestAccounts", []);
+        await provider.send("eth_requestAccounts", []);
 
-        console.log("getting wc signer");
+        console.log("getting signer");
         // The MetaMask plugin also allows signing transactions to
         // send ether and pay to change state within the blockchain.
         // For this, you need the account signer...
@@ -35,7 +34,7 @@ export default function LoginWithWalletConnectButton() {
     let button = (<></>);
     
     if (signerContext?.data.signer === undefined) {
-        button = (<Button onClick={login}>Login with Wallet Connect</Button>);
+        button = (<Button onClick={login}>Login with Metamask</Button>);
     }
 
     return (
