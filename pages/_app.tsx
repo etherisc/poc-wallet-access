@@ -30,18 +30,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const signer = useSigner();
 
-  useEffect(() => {
-    if (signer.data === undefined || signer.isLoading) {
-      return;
-    }
-
-    const counter = Counter__factory.connect(process.env.NEXT_PUBLIC_COUNTER_ADDRESS!, signer.data);
-    console.log("reading counter 2");
-    counter.getCounter().then((c) => {
-        console.log("counter: " + c);
-    });
-  }, [signer]);
-
   return (
     <div className="App">
       <SignerContext.Provider value={createSignerContext(signer.data, signer.isLoading)}>

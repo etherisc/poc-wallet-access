@@ -12,7 +12,7 @@ export const web3ClientConfig = {
     cacheProvider: true,
     ethereum: {
         appName: 'web3Modal',
-        autoConnect: true,
+        autoConnect: false,
         chains: [
             chains.mainnet,
             chains.avalanche,
