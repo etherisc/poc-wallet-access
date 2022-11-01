@@ -14,6 +14,7 @@ import React, { useEffect } from 'react';
 import { useAreSignerEqual } from 'eth-hooks';
 import { STRING_LITERAL_DROP_BUNDLE } from 'next/dist/shared/lib/constants';
 import { createSignerContext, SignerContext } from '../src/context/signer_context';
+import { Counter__factory } from '../contracts';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -28,6 +29,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   const signer = useSigner();
+
+  useEffect(() => {
+    if (signer.data === undefined || signer.isLoading) {
+      return;
+    }
+
+    const counter = Counter__factory.connect(process.env.NEXT_PUBLIC_COUNTER_ADDRESS!, signer.data);
+    console.log("reading counter 2");
+    counter.getCounter().then((c) => {
+        console.log("counter: " + c);
+    });
+  }, [signer]);
 
   return (
     <div className="App">
