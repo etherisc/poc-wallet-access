@@ -1,11 +1,10 @@
 import { ethers, Signer } from "ethers";
 import { useContext, useEffect, useState } from "react";
-import { Counter__factory } from "../../contracts";
 import CounterBuild from "../../custom-contracts/Counter.json";
 import { Coder } from 'abi-coder';
-import { connectEthersWallet, connectWalletConnect } from "../../components/utils";
 import { Typography, Button, Space } from 'antd';
 import { SignerContext } from "../context/signer_context";
+import { Counter__factory } from "../../contracts/factories/Counter__factory";
 
 export default function CounterAccess() {
     const signerContext = useContext(SignerContext);

@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "compileGifContractTypes": "typechain --target ethers-v5 --out-dir contracts './node_modules/@etherisc/gif-contracts/build/**/*json'",
+    "compileChainLinkAggregator": "typechain --target ethers-v5 --out-dir contracts './node_modules/@chainlink/contracts/abi/v0.8/AggregatorV3Interface.json'",
     "compileCustomTypes": "typechain --target ethers-v5 --out-dir contracts './custom-contracts/*json'"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
     "@types/react-blockies": "^1.4.1",
     "@walletconnect/web3-provider": "^1.8.0",
     "abi-coder": "^4.1.1",
