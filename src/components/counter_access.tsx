@@ -59,7 +59,6 @@ export default function CounterAccess() {
 
         console.log("reading counter");
         const counter = Counter__factory.connect(process.env.NEXT_PUBLIC_COUNTER_ADDRESS!, mySigner);
-        console.log("reading counter 2");
         counter.getCounter().then((c) => {
             setCurrentCount(c.toString());
         });
