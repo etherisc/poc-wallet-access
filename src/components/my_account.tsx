@@ -38,8 +38,7 @@ export default function MyAccount() {
                 } />
                 <span>{address}</span>
                 <CopyTwoTone onClick={copyAddressToClipboard} />
-                <span>{balanceEth4Dec} ETH</span>
-                /
+                |
                 <span>AVAX {balanceEth4Dec}</span>
             </Space>
         );
