@@ -7,10 +7,10 @@ import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
-import { useAccount, useSigner, useWebsocketProvider, Web3Modal } from '@web3modal/react';
+import { useAccount, useNetwork, useSigner, useWebsocketProvider, Web3Modal } from '@web3modal/react';
 import { web3ClientConfig, web3Config } from '../src/config/appConfig';
 import AppHeader from '../src/components/app_header';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAreSignerEqual } from 'eth-hooks';
 import { STRING_LITERAL_DROP_BUNDLE } from 'next/dist/shared/lib/constants';
 import { createSignerContext, SignerContext } from '../src/context/signer_context';
@@ -28,14 +28,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   const signer = useSigner();
-  // console.log("signer");
-  // console.log(signer.data);
-
-  
 
   return (
     <div className="App">
-      <SignerContext.Provider value={createSignerContext(signer.data)}>
+      <SignerContext.Provider value={createSignerContext(signer.data, signer.isLoading)}>
         <Layout>
             <Content>
               <QueryClientProvider client={queryClient}>

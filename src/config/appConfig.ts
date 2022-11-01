@@ -9,6 +9,7 @@ export const web3ClientConfig = {
     theme: 'light',
     accentColor: 'default',
     // disableInjectedProvider: true,
+    cacheProvider: true,
     ethereum: {
         appName: 'web3Modal',
         autoConnect: true,

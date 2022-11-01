@@ -12,31 +12,35 @@ import { SignerContext } from "../context/signer_context";
 
 export default function CounterAccess() {
     const signerContext = useContext(SignerContext);
-    // signerContext?.signer?.getAddress().then((address) => {;
-    //     console.log(`counter signerContext address ${address}`);
-    // });
 
     const [ mySigner, setMySigner ] = useState(signerContext?.signer);
     const [ currentCount, setCurrentCount ] = useState("");
+    const [ trxInProgress, setTrxInProgress ] = useState(false);
     
     useEffect(() => {
-        console.log("update signerContext");
-        console.log(signerContext?.signer);
-        setMySigner(signerContext?.signer);
-    }, [signerContext?.signer]);
+        console.log("update signerContext to " + signerContext?.signer);
+        console.log(signerContext?.signer + " " + signerContext?.isLoading);
+        if (signerContext?.signer !== undefined && ! signerContext?.isLoading) {
+            setMySigner(signerContext?.signer);
+        } else {
+            setMySigner(undefined);
+        }
+    }, [signerContext?.signer, signerContext?.isLoading]);
 
     async function incrementCounter() {
-        if (signerContext?.signer === undefined) {
+        if (mySigner === undefined) {
             return;
         }
         console.log("counting");
 
-        const counter = Counter__factory.connect(process.env.NEXT_PUBLIC_COUNTER_ADDRESS!, signerContext.signer);
+        const counter = Counter__factory.connect(process.env.NEXT_PUBLIC_COUNTER_ADDRESS!, mySigner);
 
         const tx = await counter.increment();
         console.log(tx);
+        setTrxInProgress(true);
         const response = await tx.wait();
         console.log(response);
+        setTrxInProgress(false);
 
         const counterAbiCoder = new Coder(CounterBuild.abi);
         let count = -1;
@@ -59,7 +63,7 @@ export default function CounterAccess() {
     }
 
     let incrementCountButton = (<></>);
-    console.log("signer: " + signerContext?.signer);
+    console.log("signer: " + mySigner);
     if (mySigner !== undefined) {
 
         incrementCountButton = (
@@ -74,6 +78,11 @@ export default function CounterAccess() {
         });
     }
 
+    let waiting = (<></>);
+    if (trxInProgress) {
+        waiting = (<div>Please wait for transaciton to complete</div>);
+    }
+
     const { Title } = Typography;
 
     return (
@@ -86,6 +95,8 @@ export default function CounterAccess() {
                 {currentCount}
                 <br />
                 {incrementCountButton}
+                <br />
+                {waiting}
             </Space>
         </div>
     );
