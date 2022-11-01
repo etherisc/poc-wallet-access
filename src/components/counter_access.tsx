@@ -5,27 +5,14 @@ import CounterBuild from "../../custom-contracts/Counter.json";
 import { Coder } from 'abi-coder';
 import { connectEthersWallet, connectWalletConnect } from "../../components/utils";
 import { Typography, Button, Space } from 'antd';
-import { useAccount, useNetwork, useSigner } from "@web3modal/react";
-import { const_blockNumberIntervalLong } from "eth-hooks/models";
-import { signerHasNetwork } from "eth-hooks/functions";
 import { SignerContext } from "../context/signer_context";
 
 export default function CounterAccess() {
     const signerContext = useContext(SignerContext);
 
-    const [ mySigner, setMySigner ] = useState(signerContext?.signer);
+    const mySigner = signerContext?.data.signer;
     const [ currentCount, setCurrentCount ] = useState("");
     const [ trxInProgress, setTrxInProgress ] = useState(false);
-    
-    useEffect(() => {
-        console.log("update signerContext to " + signerContext?.signer);
-        console.log(signerContext?.signer + " " + signerContext?.isLoading);
-        if (signerContext?.signer !== undefined && ! signerContext?.isLoading) {
-            setMySigner(signerContext?.signer);
-        } else {
-            setMySigner(undefined);
-        }
-    }, [signerContext?.signer, signerContext?.isLoading]);
 
     async function incrementCounter() {
         if (mySigner === undefined) {
@@ -76,7 +63,7 @@ export default function CounterAccess() {
         counter.getCounter().then((c) => {
             setCurrentCount(c.toString());
         });
-    }
+    } 
 
     let waiting = (<></>);
     if (trxInProgress) {
