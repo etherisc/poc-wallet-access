@@ -7,33 +7,45 @@ import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
-import { Web3Modal } from '@web3modal/react';
-import { web3ClientConfig, web3Config } from '../utils/appConfig';
+import { useAccount, useSigner, useWebsocketProvider, Web3Modal } from '@web3modal/react';
+import { web3ClientConfig, web3Config } from '../src/config/appConfig';
+import AppHeader from '../src/components/app_header';
+import React from 'react';
+import { useAreSignerEqual } from 'eth-hooks';
+import { STRING_LITERAL_DROP_BUNDLE } from 'next/dist/shared/lib/constants';
+import { createSignerContext, SignerContext } from '../src/context/signer_context';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
 
-  // load saved theme
-const savedTheme = 'light';
+    // load saved theme
+  const savedTheme = 'light';
 
-// setup themes for theme switcher
-const themes = {
-  // dark: './themes/ant-dark-theme.css',
-  light: './ant-light-theme.css',
-};
+  // setup themes for theme switcher
+  const themes = {
+    // dark: './themes/ant-dark-theme.css',
+    light: './ant-light-theme.css',
+  };
+
+  const signer = useSigner();
+  // console.log("signer");
+  // console.log(signer.data);
+
+  
 
   return (
     <div className="App">
-      <Layout>
-          <Content>
-            <QueryClientProvider client={queryClient}>
-              <ThemeSwitcherProvider themeMap={themes} defaultTheme={savedTheme ?? 'light'}>
-                <Component {...pageProps} />
-              </ThemeSwitcherProvider>
-            </QueryClientProvider>
-          </Content>
-      </Layout>
-      <Web3Modal config={web3ClientConfig} />
+      <SignerContext.Provider value={createSignerContext(signer.data)}>
+        <Layout>
+            <Content>
+              <QueryClientProvider client={queryClient}>
+                  <AppHeader />
+                  <Component {...pageProps} />
+              </QueryClientProvider>
+            </Content>
+        </Layout>
+        <Web3Modal config={web3ClientConfig} />
+      </SignerContext.Provider>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { useEthersAppContext } from 'eth-hooks/context';
 import { useBalance, useEthersAdaptorFromProviderOrSigners } from 'eth-hooks'
-import { fujiEthProvider } from '../utils/appConfig';
+import { fujiEthProvider } from '../src/config/appConfig';
 import { defaultUpdateOptions } from 'eth-hooks/models';
 import { ethers } from 'ethers';
 import { mergeDefaultUpdateOptions } from 'eth-hooks/functions';

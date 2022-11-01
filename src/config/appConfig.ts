@@ -11,7 +11,7 @@ export const web3ClientConfig = {
     // disableInjectedProvider: true,
     ethereum: {
         appName: 'web3Modal',
-        autoConnect: false,
+        autoConnect: true,
         chains: [
             chains.mainnet,
             chains.avalanche,

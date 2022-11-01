@@ -2,7 +2,7 @@ import { Button, notification } from "antd";
 import { connectorErrorText, CouldNotActivateError, EthersModalConnector, NoStaticJsonRPCProviderFoundError, useEthersAppContext, useEthersContext, UserClosedModalError } from "eth-hooks/context";
 import { TCreateEthersModalConnector } from "eth-hooks/models";
 import { useCallback, useEffect } from "react";
-import { fujiEthProvider, web3ClientConfig } from "../utils/appConfig";
+import { fujiEthProvider, web3ClientConfig } from "../src/config/appConfig";
 import { Account, Balance } from 'eth-components/ant';
 import { useAntNotification } from "./useAntNotification";
 import { useAccount, useSigner, useWebsocketProvider, Web3Button, Web3Modal } from "@web3modal/react";
