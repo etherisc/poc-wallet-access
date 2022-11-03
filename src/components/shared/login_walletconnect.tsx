@@ -16,6 +16,22 @@ export default function LoginWithWalletConnectButton() {
 
         //  Enable session (triggers QR Code modal)
         await wcProvider.enable();
+        wcProvider.on("accountsChanged", async (accounts: string[]) => {
+            console.log("accountsChanged", accounts);
+            
+            await signerContext?.data.provider?.send("eth_requestAccounts", []);
+            
+            console.log("getting signer");
+            // The MetaMask plugin also allows signing transactions to
+            // send ether and pay to change state within the blockchain.
+            // For this, you need the account signer...
+            const signer = provider.getSigner();  
+            console.log(signer);
+            signerContext!!.dispatch({ type: SignerActionType.UPDATE_SIGNER, signer: signer });
+        });
+        wcProvider.on("chainChanged", (chainId: number) => {
+            console.log("chainChanged", chainId);
+        });
 
         // A Web3Provider wraps a standard Web3 provider, which is
         // what MetaMask injects as window.ethereum into each page

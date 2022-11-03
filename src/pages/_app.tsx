@@ -30,30 +30,33 @@ function MyApp({ Component, pageProps }: AppProps) {
     data.provider.on('network', (newNetwork: any, oldNetwork: any) => {
       console.log('network', newNetwork, oldNetwork);
     });
-    
+
     // @ts-ignore
-    window.ethereum.on('accountsChanged', function (accounts: string[]) {
-      console.log('accountsChanged', accounts);
-      if (accounts.length == 0) {
-        dispatch({ type: SignerActionType.UNSET });
-        window.localStorage.clear();
-      } else {
-        switchAccount(dispatch);
-      }
-    });
-    // @ts-ignore
-    window.ethereum.on('chainChanged', function (chain: any) {
-      console.log('chainChanged', chain);
-      if (chain != "0xa869") {
-        console.log('not fuji');
-        dispatch({ type: SignerActionType.UNSET });
-        window.localStorage.clear();  
-      }
-  });
-    // @ts-ignore
-    window.ethereum.on('network', (newNetwork: any, oldNetwork: any) => {
-      console.log('network', newNetwork, oldNetwork);
-    });
+    if (window.ethereum !== undefined) {
+      // @ts-ignore
+      window.ethereum.on('accountsChanged', function (accounts: string[]) {
+        console.log('accountsChanged', accounts);
+        if (accounts.length == 0) {
+          dispatch({ type: SignerActionType.UNSET });
+          window.localStorage.clear();
+        } else {
+          switchAccount(dispatch);
+        }
+      });
+      // @ts-ignore
+      window.ethereum.on('chainChanged', function (chain: any) {
+        console.log('chainChanged', chain);
+        if (chain != "0xa869") {
+          console.log('not fuji');
+          dispatch({ type: SignerActionType.UNSET });
+          window.localStorage.clear();  
+        }
+      });
+      // @ts-ignore
+      window.ethereum.on('network', (newNetwork: any, oldNetwork: any) => {
+        console.log('network', newNetwork, oldNetwork);
+      });
+    }
   }
 
   return (
