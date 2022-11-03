@@ -41,7 +41,7 @@ export default function MyAccount() {
     
     async function copyAddressToClipboard() {
         await navigator.clipboard.writeText(address);
-        message.success('Address copied to clipboard', 2);
+        message.info('Address copied to clipboard', 2);
     }
 
     function toggleBalanceUsd() {

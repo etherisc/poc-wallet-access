@@ -1,22 +1,24 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import CounterAccess from '../components/counter_access'
-import styles from '../../styles/Home.module.css'
+import { Row, Col, Space } from 'antd'
 
 
 const Home: NextPage = () => {
 
   return (
-    <>
+    <Space style={{ padding: '16px 24px' }}>
       <Head>
         <title>Counter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-            <CounterAccess />          
-      </main>
-    </>
+      <Row>
+        <Col span={24}>
+          <CounterAccess />          
+        </Col>
+      </Row>
+    </Space>
   )
 }
 

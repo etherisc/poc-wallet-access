@@ -2,7 +2,7 @@ import { ethers, Signer } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import CounterBuild from "../../custom-contracts/Counter.json";
 import { Coder } from 'abi-coder';
-import { Typography, Button, Space } from 'antd';
+import { Typography, Button, Space, Spin, message } from 'antd';
 import { SignerContext } from "../context/signer_context";
 import { Counter__factory } from "../../contracts/factories/Counter__factory";
 
@@ -46,14 +46,18 @@ export default function CounterAccess() {
         console.log(`count: ${count}`);
         // alert(`count: ${count}`);
         setCurrentCount(count.toString());
+        message.success('Transaction finished. The counter has been incremented', 3);
     }
+
+
+    let notLoggedIn = (<>Please log in to use this application</>)
 
     let incrementCountButton = (<></>);
     console.log("signer: " + mySigner);
     if (mySigner !== undefined) {
-
+        notLoggedIn = (<></>);
         incrementCountButton = (
-            <Button onClick={incrementCounter}>Increment counter</Button>
+            <Button onClick={incrementCounter} disabled={trxInProgress}>Increment counter by 1</Button>
         );
 
         console.log("reading counter");
@@ -63,26 +67,29 @@ export default function CounterAccess() {
         });
     } 
 
+    const { Title, Text, Paragraph } = Typography;
+
     let waiting = (<></>);
     if (trxInProgress) {
-        waiting = (<div>Please wait for transaciton to complete</div>);
+        waiting = (<Paragraph><Space size={8}>
+                <Spin /><Text>Please wait for the transaction to complete</Text>
+            </Space></Paragraph>);
     }
 
-    const { Title } = Typography;
-
     return (
-        <div>
-            <Title>PoC Counter</Title>
+        <>
+            <Title>Counter component</Title>
 
             <br/>
 
-            <Space size={8}>
-                {currentCount}
-                <br />
+            <Paragraph>{notLoggedIn}</Paragraph>
+
+            <Paragraph>The current counter value is <Text strong={true}>{currentCount}</Text></Paragraph>
+            <Paragraph>
                 {incrementCountButton}
-                <br />
-                {waiting}
-            </Space>
-        </div>
+            </Paragraph>
+            {waiting}
+            
+        </>
     );
 }
