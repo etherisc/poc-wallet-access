@@ -22,7 +22,8 @@ export function initialSignerData(): SignerData {
 
 export enum SignerActionType {
     SET,
-    UNSET
+    UNSET,
+    UPDATE_SIGNER
 }
 
 export interface SignerAction {
@@ -42,6 +43,11 @@ export const signerReducer = (state: SignerData, action: SignerAction): SignerDa
             return { 
                 provider: undefined,
                 signer: undefined,
+            };
+        case SignerActionType.UPDATE_SIGNER:
+            return {
+                ...state,
+                signer: action?.signer,
             };
         default:
             throw Error("unxpected action type " + action.type);

@@ -5,8 +5,23 @@ import { Layout } from 'antd';
 import AppHeader from '../components/shared/app_header';
 import React, { useReducer } from 'react';
 import { initialSignerData, SignerActionType, SignerContext, signerReducer } from '../context/signer_context';
+import { ethers } from 'ethers';
 
 const { Header, Content, Footer } = Layout;
+
+async function switchAccount(dispatch: any) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+  await provider.send("eth_requestAccounts", []);
+
+  console.log("getting signer");
+  // The MetaMask plugin also allows signing transactions to
+  // send ether and pay to change state within the blockchain.
+  // For this, you need the account signer...
+  const signer = provider.getSigner();  
+  console.log(signer);
+  dispatch({ type: SignerActionType.UPDATE_SIGNER, signer: signer });
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [ data, dispatch ] = useReducer(signerReducer, initialSignerData());
@@ -17,11 +32,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     });
     
     // @ts-ignore
-    window.ethereum.on('accountsChanged', function (accounts: any) {
+    window.ethereum.on('accountsChanged', function (accounts: string[]) {
       console.log('accountsChanged', accounts);
       if (accounts.length == 0) {
         dispatch({ type: SignerActionType.UNSET });
         window.localStorage.clear();
+      } else {
+        switchAccount(dispatch);
       }
     });
     // @ts-ignore
