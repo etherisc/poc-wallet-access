@@ -1,8 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import ApplyForPolicy from '../components/apply_for_policy'
+import styles from '../../styles/Home.module.css'
+import ApplyForPolicy from '../../components/apply_for_policy'
 
 const Home: NextPage = () => {
     return (
