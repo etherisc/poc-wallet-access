@@ -31,6 +31,12 @@ export default function LoginWithWalletConnectButton() {
         });
         wcProvider.on("chainChanged", (chainId: number) => {
             console.log("chainChanged", chainId);
+            if (chainId != 43113) {
+                console.log('not fuji');
+                wcProvider.disconnect();
+                signerContext!!.dispatch({ type: SignerActionType.UNSET });
+                window.localStorage.clear();  
+            }
         });
 
         // A Web3Provider wraps a standard Web3 provider, which is

@@ -10,6 +10,7 @@ import { ethers } from 'ethers';
 const { Header, Content, Footer } = Layout;
 
 async function switchAccount(dispatch: any) {
+  // @ts-ignore
   const provider = new ethers.providers.Web3Provider(window.ethereum)
 
   await provider.send("eth_requestAccounts", []);
