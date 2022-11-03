@@ -76,20 +76,27 @@ export default function CounterAccess() {
             </Space></Paragraph>);
     }
 
+    let content = (<></>);
+
+    if (mySigner !== undefined) {
+        content = (
+            <>
+                <Paragraph>{notLoggedIn}</Paragraph>
+
+                <Paragraph>The current counter value is <Text strong={true}>{currentCount}</Text></Paragraph>
+                <Paragraph>
+                    {incrementCountButton}
+                </Paragraph>
+                {waiting}
+            </>
+        );
+    }
+
     return (
         <>
             <Title>Counter component</Title>
 
-            <br/>
-
-            <Paragraph>{notLoggedIn}</Paragraph>
-
-            <Paragraph>The current counter value is <Text strong={true}>{currentCount}</Text></Paragraph>
-            <Paragraph>
-                {incrementCountButton}
-            </Paragraph>
-            {waiting}
-            
+            {content}
         </>
     );
 }

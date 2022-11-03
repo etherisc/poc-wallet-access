@@ -10,7 +10,7 @@ export default function AppHeader() {
         <PageHeader
             className="site-page-header"
             title="Depeg PoC"
-            subTitle="Get your wallet insured now"
+            subTitle="Get your stablecoins insured now"
             extra={[
                 <MyAccount key="4" />,
                 <Logout key="3" />,
