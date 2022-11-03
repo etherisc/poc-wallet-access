@@ -29,13 +29,13 @@ export default function LoginWithWalletConnectButton() {
         // send ether and pay to change state within the blockchain.
         // For this, you need the account signer...
         const signer = provider.getSigner();
-        signerContext?.dispatch({ type: SignerActionType.SET, signer: signer });
+        signerContext?.dispatch({ type: SignerActionType.SET, signer: signer, provider: provider });
     }
 
     let button = (<></>);
     
     if (signerContext?.data.signer === undefined) {
-        button = (<Button onClick={login}>Login with Wallet Connect</Button>);
+        button = (<Button onClick={login}>Connect with Wallet Connect</Button>);
     }
 
     return (

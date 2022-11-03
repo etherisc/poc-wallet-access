@@ -1,5 +1,4 @@
-import { Signer } from "ethers";
-import { ErrorFragment } from "ethers/lib/utils";
+import { providers, Signer } from "ethers";
 import React from "react";
 
 export interface SignerContext {
@@ -8,6 +7,7 @@ export interface SignerContext {
 }
 
 export interface SignerData {
+    provider: providers.Web3Provider | undefined;
     signer: Signer | undefined;
 }
 
@@ -15,7 +15,8 @@ export const SignerContext = React.createContext<SignerContext|undefined>(undefi
 
 export function initialSignerData(): SignerData {
     return {
-        signer: undefined
+        provider: undefined,
+        signer: undefined,
     };
 }
 
@@ -27,14 +28,21 @@ export enum SignerActionType {
 export interface SignerAction {
     type: SignerActionType;
     signer?: Signer;
+    provider?: providers.Web3Provider;
 }
 
 export const signerReducer = (state: SignerData, action: SignerAction): SignerData => {
     switch (action.type) {
         case SignerActionType.SET:
-            return { signer: action?.signer };
+            return { 
+                provider: action?.provider,
+                signer: action?.signer,
+            };
         case SignerActionType.UNSET:
-            return { signer: undefined };
+            return { 
+                provider: undefined,
+                signer: undefined,
+            };
         default:
             throw Error("unxpected action type " + action.type);
     }

@@ -13,7 +13,7 @@ export default function Logout() {
     let button = (<></>);
 
     if (signerContext?.data.signer !== undefined) {
-        button = (<Button onClick={logout}>Logout</Button>);
+        button = (<Button onClick={logout}>Disconnect</Button>);
     }
 
 

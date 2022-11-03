@@ -50,7 +50,7 @@ export default function MyAccount() {
 
     let account = (<></>);
 
-    if (address !== undefined && address !== "") {
+    if (signerContext?.data.signer != undefined && address !== undefined && address !== "") {
         let balanceString;
 
         if (showBalanceUsd) {
